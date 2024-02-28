@@ -1,6 +1,7 @@
-import { OAuthButtonItemProps } from '@/types/auth'
-import { FaGoogle, FaMicrosoft, FaGithub } from 'react-icons/fa'
+import { FaGithub, FaGoogle, FaMicrosoft } from 'react-icons/fa'
 import { HiArrowRight } from 'react-icons/hi2'
+
+import type { OAuthButtonItemProps } from '@/types/auth'
 
 const providers = [
   {

@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signInSchema } from '@/lib/schemas/auth'
+
 import { FormError } from '../form-error'
 
 export default function Credentials() {
@@ -49,7 +50,7 @@ export default function Credentials() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='font-semibold' >メールアドレス</FormLabel>
+              <FormLabel className="font-semibold">メールアドレス</FormLabel>
               <FormControl>
                 <Input
                   className="placeholder:text-foreground/10"

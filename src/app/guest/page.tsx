@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react'
 
 export default function GuestPage() {
-  return <div>GuestPage</div>;
+  return <div>GuestPage</div>
 }

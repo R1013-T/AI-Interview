@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={`${LINESeedJP.className} h-d-screen font-bold overflow-hidden`}>{children}</body>
+      <body
+        className={`${LINESeedJP.className} h-d-screen font-bold overflow-hidden`}
+      >
+        {children}
+      </body>
     </html>
   )
 }

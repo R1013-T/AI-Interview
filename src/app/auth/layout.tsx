@@ -8,7 +8,7 @@ export default function AuthLayout({
   return (
     <>
       <TopHeader />
-      <main className='p-3 pt-16 h-full' >{children}</main>
+      <main className="p-3 pt-16 h-full">{children}</main>
     </>
   )
 }

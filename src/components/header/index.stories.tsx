@@ -14,11 +14,11 @@ type Story = StoryObj<typeof Header>
 export const Default: Story = {
   args: {
     is_link: true,
-  }
+  },
 }
 
 export const NoLink: Story = {
   args: {
     is_link: false,
-  }
+  },
 }

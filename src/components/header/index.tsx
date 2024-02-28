@@ -1,6 +1,7 @@
-import Logo from '../common/logo'
-import AuthLink from '../common/buttons/auth-link'
 import Link from 'next/link'
+
+import AuthLink from '../common/buttons/auth-link'
+import Logo from '../common/logo'
 
 export default function TopHeader({ is_link }: { is_link?: boolean }) {
   return (

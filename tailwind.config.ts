@@ -76,10 +76,10 @@ const config = {
         'd-screen': '100dvh',
       },
       minWidth: {
-        'sm': '24rem',
-        'md': '28rem',
-        'lg': '32rem',
-      }
+        sm: '24rem',
+        md: '28rem',
+        lg: '32rem',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
