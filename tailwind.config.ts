@@ -72,6 +72,14 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      height: {
+        'd-screen': '100dvh',
+      },
+      minWidth: {
+        'sm': '24rem',
+        'md': '28rem',
+        'lg': '32rem',
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],

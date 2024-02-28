@@ -1,4 +1,4 @@
-import './globals.css'
+import './globals.scss'
 
 import type { Metadata } from 'next'
 
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={`${LINESeedJP.className} font-bold overflow-hidden`}>{children}</body>
+      <body className={`${LINESeedJP.className} h-d-screen font-bold overflow-hidden`}>{children}</body>
     </html>
   )
 }

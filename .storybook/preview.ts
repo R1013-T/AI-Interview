@@ -1,6 +1,5 @@
 import type { Preview } from '@storybook/react'
-import '../src/app/globals.css'
-import { LINESeedJP } from '../src/lib/fonts'
+import '../src/app/globals.scss'
 
 const preview: Preview = {
   parameters: {
