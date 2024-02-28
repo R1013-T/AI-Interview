@@ -19,7 +19,7 @@ export default function AuthPage() {
         <Card className="w-full md:max-w-lg md:min-w-sm md:w-1/2">
           <CardHeader>
             <CardTitle>
-              <p className="text-center text-sm md:text-lg">
+              <p className="text-center tracking-wide text-sm md:text-lg">
                 AI模擬面接を始める
               </p>
             </CardTitle>
@@ -27,7 +27,7 @@ export default function AuthPage() {
           <CardContent className="max-w-md mx-auto">
             <AuthCardContent />
           </CardContent>
-          <CardFooter className="max-w-md mx-auto">
+          <CardFooter className="max-w-md mx-auto text-white/50 text-sm">
             <BackButton href="/" />
           </CardFooter>
         </Card>
