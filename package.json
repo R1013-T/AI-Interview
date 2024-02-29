@@ -14,7 +14,9 @@
     "format:prettier": "bun run lint:prettier --write",
     "typecheck": "tsc",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "db:generate": "bun run drizzle-kit generate:pg --config drizzle.config.ts",
+    "db:push": "bun run drizzle-kit push:pg --config drizzle.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -31,8 +33,11 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "drizzle-orm": "^0.29.4",
     "lucide-react": "^0.341.0",
     "next": "14.1.0",
+    "next-auth": "beta",
+    "postgres": "^3.4.3",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.50.1",
@@ -56,6 +61,7 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "autoprefixer": "^10.0.1",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
