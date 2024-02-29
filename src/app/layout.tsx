@@ -2,6 +2,7 @@ import './globals.scss'
 
 import type { Metadata } from 'next'
 
+import { Toaster } from '@/components/ui/sonner'
 import { LINESeedJP } from '@/lib/fonts'
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
         className={`${LINESeedJP.className} h-d-screen font-bold overflow-hidden`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   )
