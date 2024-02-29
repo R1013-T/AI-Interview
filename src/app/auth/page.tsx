@@ -3,7 +3,6 @@ import BackButton from '@/components/common/buttons/back-button'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,

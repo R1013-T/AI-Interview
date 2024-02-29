@@ -1,3 +1,5 @@
+'use client';
+
 import { FaGithub, FaGoogle, FaMicrosoft } from 'react-icons/fa'
 import { HiArrowRight } from 'react-icons/hi2'
 

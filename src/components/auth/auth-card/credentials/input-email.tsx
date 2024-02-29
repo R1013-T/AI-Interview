@@ -5,7 +5,6 @@ import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import type * as z from 'zod'
 
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -15,22 +14,22 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { signInSchema } from '@/lib/schemas/auth'
+import { emailSchema } from '@/lib/schemas/auth'
 
-import { FormError } from '../form-error'
+import { FormError } from '../../form-error'
 
 export default function Credentials() {
   const [error, setError] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof signInSchema>>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<z.infer<typeof emailSchema>>({
+    resolver: zodResolver(emailSchema),
     defaultValues: {
       email: '',
     },
   })
 
-  const onSubmit = (values: z.infer<typeof signInSchema>) => {
+  const onSubmit = (values: z.infer<typeof emailSchema>) => {
     setError('')
 
     startTransition(async () => {
@@ -68,7 +67,7 @@ export default function Credentials() {
           type="submit"
           disabled={isPending}
         >
-          ログイン
+          つぎへ
         </button>
       </form>
     </Form>
