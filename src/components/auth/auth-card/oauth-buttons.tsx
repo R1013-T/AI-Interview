@@ -3,7 +3,7 @@ import { HiArrowRight } from 'react-icons/hi2'
 
 import type { OAuthButtonItemProps } from '@/types/auth'
 
-const providers = [
+const oauthButtonItems = [
   {
     provider: 'microsoft',
     displayName: 'Microsoft',
@@ -38,8 +38,8 @@ const OAuthButtonItem = ({
 export default function OAuthButtons() {
   return (
     <div className="flex flex-col gap-3">
-      {providers.map((provider) => (
-        <OAuthButtonItem key={provider.provider} {...provider} />
+      {oauthButtonItems.map((button) => (
+        <OAuthButtonItem key={button.provider} {...button} />
       ))}
     </div>
   )
