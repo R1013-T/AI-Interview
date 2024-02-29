@@ -27,7 +27,7 @@ const OAuthButtonItem = ({
   Icon,
 }: OAuthButtonItemProps) => {
   return (
-    <button className="flex justify-between w-full text-white border rounded-md py-2 px-3 group">
+    <button className="flex justify-between items-center w-full text-white border rounded-md py-2 px-3 group">
       <Icon className="w-7 h-7" />
       <p>{displayName}</p>
       <HiArrowRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" />
