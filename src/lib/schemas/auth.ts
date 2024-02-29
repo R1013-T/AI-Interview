@@ -36,7 +36,6 @@ export const signUpSchema = z
         path: ['confirm_password'],
         code: 'custom',
         message: 'パスワードが一致しません',
-      });
+      })
     }
-  });
-
+  })
