@@ -4,8 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
+import { TbLoader } from 'react-icons/tb'
+import { toast } from 'sonner'
 import type * as z from 'zod'
 
+import { signUpByEmail } from '@/actions/auth'
 import {
   Form,
   FormControl,
@@ -40,11 +43,14 @@ export default function SignUp() {
     setError('')
 
     startTransition(async () => {
-      // const result = await signIn(values)
-      // if (!result.isSuccess) {
-      //   setError(result.error.message)
-      //   return
-      // }
+      const result = await signUpByEmail(values)
+      if (!result.isSuccess) {
+        setError(result.error.message)
+        toast.error(result.error.message)
+        return
+      } else {
+        toast.success('サインアップに成功しました。')
+      }
     })
   }
 
@@ -128,10 +134,11 @@ export default function SignUp() {
           />
           <FormError message={error} />
           <button
-            className="bg-primary w-full py-2 rounded-md border border-secondary text-foreground"
+            className="bg-primary w-full py-2 rounded-md border border-secondary flex items-center justify-center gap-2 text-foreground disabled:opacity-50"
             type="submit"
             disabled={isPending}
           >
+            {isPending && <TbLoader className="-ml-6 w-6 h-6 animate-spin" />}
             サインアップ
           </button>
         </form>
