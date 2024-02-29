@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useSearchParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import type * as z from 'zod'
@@ -17,8 +18,6 @@ import { Input } from '@/components/ui/input'
 import { signUpSchema } from '@/lib/schemas/auth'
 
 import { FormError } from '../../form-error'
-
-import { useSearchParams } from 'next/navigation'
 
 export default function SignUp() {
   const searchParams = useSearchParams()
@@ -94,7 +93,9 @@ export default function SignUp() {
           name="confirm_password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-semibold">パスワード（確認）</FormLabel>
+              <FormLabel className="font-semibold">
+                パスワード（確認）
+              </FormLabel>
               <FormControl>
                 <Input
                   className="placeholder:text-foreground/10"

@@ -1,6 +1,12 @@
-import SignIn from "@/components/auth/auth-card/credentials/sign-in";
-import BackButton from "@/components/common/buttons/back-button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import SignIn from '@/components/auth/auth-card/credentials/sign-in'
+import BackButton from '@/components/common/buttons/back-button'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export default function SignInPage() {
   return (

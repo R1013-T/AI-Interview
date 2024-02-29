@@ -1,10 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
+import { TbLoader } from 'react-icons/tb'
+import { toast } from 'sonner'
 import type * as z from 'zod'
 
+import { confirmEmail } from '@/actions/auth'
 import {
   Form,
   FormControl,
@@ -19,6 +23,8 @@ import { emailSchema } from '@/lib/schemas/auth'
 import { FormError } from '../../form-error'
 
 export default function Credentials() {
+  const router = useRouter()
+
   const [error, setError] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
 
@@ -33,11 +39,20 @@ export default function Credentials() {
     setError('')
 
     startTransition(async () => {
-      // const result = await signIn(values)
-      // if (!result.isSuccess) {
-      //   setError(result.error.message)
-      //   return
-      // }
+      const result = await confirmEmail(values)
+      if (!result.actionResult.isSuccess) {
+        setError(result.actionResult.error.message)
+        return
+      }
+
+      if (result.emailExists) {
+        toast.success('メールアドレスを確認しました。')
+        router.push(`/auth/sign-in?email=${values.email}`)
+      } else {
+        toast.success('メールアドレスを確認しました。')
+        // toast.success('確認メールを送信しました。メールのリンクから登録を完了してください。')
+        router.push(`/auth/sign-up?email=${values.email}`)
+      }
     })
   }
 
@@ -63,10 +78,11 @@ export default function Credentials() {
         />
         <FormError message={error} />
         <button
-          className="bg-primary w-full py-2 rounded-md border border-secondary text-foreground"
+          className="bg-primary w-full py-2 rounded-md border border-secondary flex items-center justify-center gap-2 text-foreground disabled:opacity-50"
           type="submit"
           disabled={isPending}
         >
+          {isPending && <TbLoader className="-ml-6 w-6 h-6 animate-spin" />}
           つぎへ
         </button>
       </form>

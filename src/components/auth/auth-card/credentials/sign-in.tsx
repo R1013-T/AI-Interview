@@ -1,10 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import type * as z from 'zod'
 
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -17,8 +20,6 @@ import { Input } from '@/components/ui/input'
 import { signInSchema } from '@/lib/schemas/auth'
 
 import { FormError } from '../../form-error'
-
-import { useSearchParams } from 'next/navigation'
 
 export default function SignIn() {
   const searchParams = useSearchParams()
@@ -48,54 +49,57 @@ export default function SignIn() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-semibold">メールアドレス</FormLabel>
-              <FormControl>
-                <Input
-                  className="placeholder:text-foreground/10"
-                  placeholder="you@example.com"
-                  {...field}
-                  disabled={true}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-semibold">パスワード</FormLabel>
-              <FormControl>
-                <Input
-                  className="placeholder:text-foreground/10"
-                  type="password"
-                  placeholder="password"
-                  {...field}
-                  autoFocus
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormError message={error} />
-        <button
-          className="bg-primary w-full py-2 rounded-md border border-secondary text-foreground"
-          type="submit"
-          disabled={isPending}
-        >
-          サインイン
-        </button>
-      </form>
-    </Form>
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold">メールアドレス</FormLabel>
+                <FormControl>
+                  <Input {...field} disabled={true} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold">パスワード</FormLabel>
+                <FormControl>
+                  <Input
+                    className="placeholder:text-foreground/10"
+                    type="password"
+                    placeholder="password"
+                    {...field}
+                    autoFocus
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormError message={error} />
+          <button
+            className="bg-primary w-full py-2 rounded-md border border-secondary text-foreground"
+            type="submit"
+            disabled={isPending}
+          >
+            サインイン
+          </button>
+        </form>
+      </Form>
+      <Link
+        href={`/auth/password-reset?email=${email}`}
+        className="mt-5 text-center block cursor-pointer underline-offset-4 hover:underline"
+      >
+        <p className="text-xs text-white/40">パスワードを変更する</p>
+      </Link>
+    </>
   )
 }

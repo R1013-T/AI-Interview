@@ -1,7 +1,14 @@
+import React from 'react'
+
 import SignUp from '@/components/auth/auth-card/credentials/sign-up'
 import BackButton from '@/components/common/buttons/back-button'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import React from 'react'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export default function SignUpPage() {
   return (
