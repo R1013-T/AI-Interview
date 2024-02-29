@@ -28,7 +28,7 @@ const OAuthButtonItem = ({
 }: OAuthButtonItemProps) => {
   return (
     <button className="flex justify-between w-full text-white border rounded-md py-2 px-3 group">
-      <Icon className="w-6 h-6" />
+      <Icon className="w-7 h-7" />
       <p>{displayName}</p>
       <HiArrowRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" />
     </button>
@@ -37,7 +37,7 @@ const OAuthButtonItem = ({
 
 export default function OAuthButtons() {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       {providers.map((provider) => (
         <OAuthButtonItem key={provider.provider} {...provider} />
       ))}
