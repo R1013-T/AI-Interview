@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSearchParams } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { Suspense, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import type * as z from 'zod'
 
@@ -49,91 +49,93 @@ export default function SignUp() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-semibold">メールアドレス</FormLabel>
-              <FormControl>
-                <Input
-                  className="placeholder:text-foreground/10"
-                  placeholder="you@example.com"
-                  {...field}
-                  disabled={true}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-semibold">パスワード</FormLabel>
-              <FormControl>
-                <Input
-                  className="placeholder:text-foreground/10"
-                  type="password"
-                  placeholder="password"
-                  {...field}
-                  autoFocus
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirm_password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-semibold">
-                パスワード（確認）
-              </FormLabel>
-              <FormControl>
-                <Input
-                  className="placeholder:text-foreground/10"
-                  type="password"
-                  placeholder="password"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-semibold">名前</FormLabel>
-              <FormControl>
-                <Input
-                  className="placeholder:text-foreground/10"
-                  placeholder="名前"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormError message={error} />
-        <button
-          className="bg-primary w-full py-2 rounded-md border border-secondary text-foreground"
-          type="submit"
-          disabled={isPending}
-        >
-          サインアップ
-        </button>
-      </form>
-    </Form>
+    <Suspense>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold">メールアドレス</FormLabel>
+                <FormControl>
+                  <Input
+                    className="placeholder:text-foreground/10"
+                    placeholder="you@example.com"
+                    {...field}
+                    disabled={true}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold">パスワード</FormLabel>
+                <FormControl>
+                  <Input
+                    className="placeholder:text-foreground/10"
+                    type="password"
+                    placeholder="password"
+                    {...field}
+                    autoFocus
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirm_password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold">
+                  パスワード（確認）
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    className="placeholder:text-foreground/10"
+                    type="password"
+                    placeholder="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold">名前</FormLabel>
+                <FormControl>
+                  <Input
+                    className="placeholder:text-foreground/10"
+                    placeholder="名前"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormError message={error} />
+          <button
+            className="bg-primary w-full py-2 rounded-md border border-secondary text-foreground"
+            type="submit"
+            disabled={isPending}
+          >
+            サインアップ
+          </button>
+        </form>
+      </Form>
+    </Suspense>
   )
 }

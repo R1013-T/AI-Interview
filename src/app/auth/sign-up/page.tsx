@@ -1,4 +1,4 @@
-import React from 'react'
+import { Suspense } from 'react'
 
 import SignUp from '@/components/auth/auth-card/credentials/sign-up'
 import BackButton from '@/components/common/buttons/back-button'
@@ -26,7 +26,9 @@ export default function SignUpPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="max-w-md mx-auto">
-            <SignUp />
+            <Suspense>
+              <SignUp />
+            </Suspense>
           </CardContent>
           <CardFooter className="max-w-md mx-auto text-white/50 text-sm">
             <BackButton href="/auth" />
