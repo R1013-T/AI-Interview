@@ -9,6 +9,6 @@ export default {
   breakpoints: true,
   driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.NEXT_PUBLIC_SUPABASE_URI!,
+    connectionString: process.env.SUPABASE_URI!,
   },
 } satisfies Config
