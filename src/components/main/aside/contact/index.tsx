@@ -38,25 +38,15 @@ const contactItems = [
 const ContactItem = ({
   url,
   Icon,
-  name,
 }: {
   url: string
   Icon: IconType
   name: string
 }) => {
   return (
-    // <TooltipProvider>
-    //   <Tooltip>
-    //     <TooltipTrigger>
     <a href={url} target="_blank">
       <Icon className="w-7 h-7 text-foreground" />
     </a>
-    //      </TooltipTrigger>
-    //     <TooltipContent>
-    //       <p>{name}</p>
-    //     </TooltipContent>
-    //   </Tooltip>
-    // </TooltipProvider>
   )
 }
 

@@ -8,7 +8,7 @@ import TopNav from '../nav/top-nav'
 
 export default function DesktopAside() {
   return (
-    <aside className="hidden md:block p-3 h-full border-r text-card-foreground">
+    <aside className="hidden md:block p-3 h-full w-48 overflow-hidden border-r text-card-foreground">
       <nav className="h-full flex flex-col justify-between">
         <div>
           <Link href="/dashboard" className="mb-3 inline-block">

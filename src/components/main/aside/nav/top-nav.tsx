@@ -1,3 +1,3 @@
 export default function TopNav() {
-  return <div>TopNav</div>
+  return <div className="text-foreground">TopNav</div>
 }

@@ -4,10 +4,11 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
+
+import BottomNav from '../nav/bottom.nav'
+import TopNav from '../nav/top-nav'
 
 export default function MobileAsideLeft() {
   return (
@@ -16,13 +17,10 @@ export default function MobileAsideLeft() {
         <HiOutlineQueueList className="w-8 h-8" />
       </SheetTrigger>
       <SheetContent side="left">
-        <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </SheetDescription>
-        </SheetHeader>
+        <SheetDescription className="h-full flex flex-col justify-between">
+          <TopNav />
+          <BottomNav />
+        </SheetDescription>
       </SheetContent>
     </Sheet>
   )
