@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import Nav from '@/components/main/aside'
 import { buttonVariants } from '@/components/ui/button'
 
 import { auth } from '../../../auth'
@@ -26,8 +27,9 @@ export default async function MainLayout({
   }
 
   return (
-    <>
-      <main>{children}</main>
-    </>
+    <div className="flex h-d-screen w-screen">
+      <Nav />
+      <main className='h-full w-full' >{children}</main>
+    </div>
   )
 }
