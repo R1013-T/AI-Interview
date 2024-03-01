@@ -74,7 +74,6 @@ const config = {
       },
       height: {
         'd-screen': '100dvh',
-        nav: 'calc(100dvh - 15rem)',
       },
       minWidth: {
         sm: '24rem',

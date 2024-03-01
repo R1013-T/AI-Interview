@@ -18,8 +18,8 @@ export default function MobileAsideLeft() {
         <HiOutlineQueueList className="w-8 h-8" />
       </SheetTrigger>
       <SheetContent side="left">
-        <SheetDescription className="h-full flex flex-col justify-between">
-          <ScrollArea className="h-nav pt-3">
+        <SheetDescription className="h-full flex flex-col justify-between relative">
+          <ScrollArea className="h-nav">
             <TopNav />
           </ScrollArea>
           <BottomNav />

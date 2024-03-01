@@ -9,13 +9,16 @@ import TopNav from '../nav/top-nav'
 
 export default function DesktopAside() {
   return (
-    <aside className="hidden md:block p-3 h-full w-52 overflow-hidden border-r text-card-foreground">
-      <nav className="h-full flex flex-col justify-between">
-        <div>
-          <Link href="/dashboard" className="mb-3 inline-block">
+    <aside className="hidden md:block p-3 h-full w-56 overflow-hidden border-r text-card-foreground">
+      <nav className="h-full flex flex-col justify-between relative">
+        <div className="h-full">
+          <Link
+            href="/dashboard"
+            className="mb-3 border-b inline-block absolute top-0 left-0 right-0 backdrop-blur z-20"
+          >
             <Logo />
           </Link>
-          <ScrollArea className="h-nav">
+          <ScrollArea className="h-full">
             <TopNav />
           </ScrollArea>
         </div>
