@@ -18,8 +18,8 @@ export default async function DashboardPage() {
             <p>name : {session?.user?.name}</p>
           </div>
           <SignOutButton />
-          <div className="h-screen border border-green-600"></div>
-          <div className="h-screen border border-green-600"></div>
+          <div className="h-screen"></div>
+          <div className="h-screen"></div>
         </div>
       </ScrollArea>
     </article>
