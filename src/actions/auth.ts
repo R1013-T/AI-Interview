@@ -46,8 +46,9 @@ export const confirmEmail = async (
           actionResult: {
             isSuccess: false,
             error: {
-              message: 'このメールアドレスは既にソーシャルログインで登録されています。',
-            }
+              message:
+                'このメールアドレスは既にソーシャルログインで登録されています。',
+            },
           },
           emailExists: true,
         }

@@ -29,7 +29,7 @@ export default async function MainLayout({
   return (
     <div className="flex h-d-screen w-screen">
       <Nav />
-      <main className='h-full w-full' >{children}</main>
+      <main className="h-full w-full">{children}</main>
     </div>
   )
 }
