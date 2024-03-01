@@ -41,6 +41,17 @@ export const confirmEmail = async (
         emailExists: false,
       }
     } else {
+      if (!user.password) {
+        return {
+          actionResult: {
+            isSuccess: false,
+            error: {
+              message: 'このメールアドレスは既にソーシャルログインで登録されています。',
+            }
+          },
+          emailExists: true,
+        }
+      }
       return {
         actionResult: {
           isSuccess: true,
@@ -133,7 +144,7 @@ export const signUpByEmail = async (
       return {
         isSuccess: false,
         error: {
-          message: 'User already exists',
+          message: 'このメールアドレスは既に登録されています。',
         },
       }
     }
