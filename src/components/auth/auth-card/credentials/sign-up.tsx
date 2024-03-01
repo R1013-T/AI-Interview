@@ -120,7 +120,7 @@ export default function SignUp() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">名前</FormLabel>
+                <FormLabel className="font-semibold">ユーザーネーム</FormLabel>
                 <FormControl>
                   <Input
                     className="placeholder:text-foreground/10"
