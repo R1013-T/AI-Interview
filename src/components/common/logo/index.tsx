@@ -1,3 +1,3 @@
 export default function Logo() {
-  return <h1 className="tracking-wider text-lg">AI模擬面接</h1>
+  return <h1 className="tracking-wider text-lg break-keep">AI模擬面接</h1>
 }
