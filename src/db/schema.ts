@@ -1,14 +1,11 @@
 import type { AdapterAccount } from '@auth/core/adapters'
 import {
   integer,
-  pgEnum,
   pgTable,
   primaryKey,
   text,
   timestamp,
 } from 'drizzle-orm/pg-core'
-
-export const roleEnum = pgEnum('role', ['admin', 'user'])
 
 export const users = pgTable('user', {
   id: text('id').notNull().primaryKey(),
@@ -63,4 +60,15 @@ export const passwordResetTokens = pgTable('passwordResetToken', {
   email: text('email').notNull().unique(),
   token: text('token').notNull(),
   expires: timestamp('expires', { mode: 'date' }).notNull(),
+})
+
+export const interviews = pgTable('interview', {
+  id: text('id').notNull().primaryKey(),
+  occupation: text('occupation').notNull(),
+  questionsAndAnswers: text('questionsAndAnswers').notNull(),
+  score: integer('score').notNull(),
+  feedBack: text('feedBack').notNull(),
+  createdAt: timestamp('createdAt', { mode: 'date' }).notNull(),
+  updatedAt: timestamp('updatedAt', { mode: 'date' }),
+  userId: text('userId').notNull().references(() => users.id, { onDelete: 'cascade' }),
 })
