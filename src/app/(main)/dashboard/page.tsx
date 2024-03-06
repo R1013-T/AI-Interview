@@ -14,7 +14,7 @@ export default async function DashboardPage() {
           <h2 className="w-full text-center p-3 text-xl md:text-left text-card-foreground">
             ダッシュボード
           </h2>
-          <div className="w-full flex flex-col gap-2">
+          <div className="w-full flex flex-col gap-1">
             <ScoreGraph />
             <div className="w-full pr-6 flex">
               <OccupationGraph />

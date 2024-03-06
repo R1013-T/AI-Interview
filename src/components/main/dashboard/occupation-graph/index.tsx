@@ -60,7 +60,7 @@ export default function OccupationGraph() {
           showLabel={false}
           showAnimation={true}
           animationDuration={600}
-          className="h-full p-3"
+          className="h-full p-5"
           customTooltip={customTooltip}
         />
       </div>
