@@ -9,7 +9,7 @@ import TopNav from '../nav/top-nav'
 
 export default function DesktopAside() {
   return (
-    <aside className="hidden md:block p-3 pr-0 h-full w-56 overflow-hidden border-r text-card-foreground">
+    <aside className="hidden md:block p-3 pr-0 h-full w-60 overflow-hidden border-r text-card-foreground">
       <nav className="h-full flex flex-col justify-between relative">
         <div className="h-full">
           <Link
