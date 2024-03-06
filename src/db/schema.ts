@@ -1,11 +1,17 @@
 import type { AdapterAccount } from '@auth/core/adapters'
 import {
   integer,
+  pgEnum,
   pgTable,
   primaryKey,
   text,
   timestamp,
 } from 'drizzle-orm/pg-core'
+
+export const employmentTypeEnums = pgEnum('employmentType', [
+  'newGraduate',
+  'midCareer',
+])
 
 export const users = pgTable('user', {
   id: text('id').notNull().primaryKey(),
@@ -65,6 +71,7 @@ export const passwordResetTokens = pgTable('passwordResetToken', {
 export const interviews = pgTable('interview', {
   id: text('id').notNull().primaryKey(),
   occupation: text('occupation').notNull(),
+  employmentType: employmentTypeEnums('employmentType').notNull(),
   questionsAndAnswers: text('questionsAndAnswers').notNull(),
   score: integer('score').notNull(),
   feedBack: text('feedBack').notNull(),

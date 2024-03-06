@@ -15,6 +15,13 @@
       "when": 1709440636966,
       "tag": "0001_flat_sersi",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1709722035238,
+      "tag": "0002_tricky_next_avengers",
+      "breakpoints": true
     }
   ]
 }
