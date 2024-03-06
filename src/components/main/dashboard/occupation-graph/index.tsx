@@ -45,7 +45,7 @@ export default function OccupationGraph() {
   return (
     <div className="m-3 w-full">
       <h3 className="mb-2">職種</h3>
-      <div className="h-56 text-card-foreground flex justify-center items-center bg-card rounded-md border">
+      <div className="h-36 md:h-56 text-card-foreground flex justify-center items-center bg-card rounded-md border">
         <DonutChart
           data={datahero}
           variant="donut"
@@ -60,7 +60,7 @@ export default function OccupationGraph() {
           showLabel={false}
           showAnimation={true}
           animationDuration={600}
-          className="h-44"
+          className="h-full p-3"
           customTooltip={customTooltip}
         />
       </div>

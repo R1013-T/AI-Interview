@@ -57,7 +57,7 @@ export default function ScoreGraph() {
   return (
     <div className="m-3 w-full pr-6">
       <h3 className="mb-2">スコア</h3>
-      <div className="h-56 w-full text-card-foreground p-5 px-3.5 bg-card rounded-md border flex gap-1">
+      <div className="h-44 md:h-56 w-full text-card-foreground p-5 px-3.5 bg-card rounded-md border flex gap-1">
         <div className="h-full flex flex-col justify-between text-xs">
           <p>100</p>
           <p>50</p>
