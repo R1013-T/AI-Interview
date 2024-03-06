@@ -10,7 +10,7 @@ export default async function DashboardPage() {
   return (
     <article className="h-full w-full flex flex-col gap-3">
       <ScrollArea className="h-full">
-        <div className="pt-12 md:pt-0 w-full max-w-2xl mx-auto">
+        <div className="pt-12 md:pt-3 w-full max-w-2xl mx-auto">
           <h2 className="w-full text-center p-3 text-xl md:text-left text-card-foreground">
             ダッシュボード
           </h2>
