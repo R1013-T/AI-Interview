@@ -6,8 +6,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { auth } from '../../../../auth'
 
 export default async function DashboardPage() {
-  const session = await auth()
-
   return (
     <article className="h-full w-full flex flex-col gap-3">
       <ScrollArea className="h-ful">

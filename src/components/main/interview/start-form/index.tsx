@@ -2,13 +2,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import { TbLoader } from 'react-icons/tb'
+import { HiArrowRight } from 'react-icons/hi2'
 import { toast } from 'sonner'
 import type * as z from 'zod'
 
-import { FormError } from '@/components/auth/form-error'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -25,9 +23,6 @@ import { startFormSchema } from '@/lib/schemas/interview'
 export default function StartForm() {
   const router = useRouter()
 
-  const [error, setError] = useState<string | undefined>('')
-  const [isPending, startTransition] = useTransition()
-
   const form = useForm<z.infer<typeof startFormSchema>>({
     resolver: zodResolver(startFormSchema),
     defaultValues: {
@@ -37,25 +32,20 @@ export default function StartForm() {
   })
 
   const onSubmit = (values: z.infer<typeof startFormSchema>) => {
-    setError('')
+    const validateFields = startFormSchema.safeParse(values)
+    if (!validateFields.success) return
 
-    startTransition(async () => {
-      // const result = await confirmEmail(startFormSchema)
-      // if (!result.actionResult.isSuccess) {
-      //   setError(result.actionResult.error.message)
-      //   return
-      // }
+    const { employmentType, occupation } = validateFields.data
 
-      // if (result.emailExists) {
-      //   toast.success('メールアドレスを確認しました。')
-      //   router.push(`/auth/sign-in?email=${values.email}`)
-      // } else {
-      //   toast.success('メールアドレスを確認しました。')
-      //   // toast.success('確認メールを送信しました。メールのリンクから登録を完了してください。')
-      //   router.push(`/auth/sign-up?email=${values.email}`)
-      // }
-      toast.success(`${values.employmentType}, ${values.occupation}`)
-    })
+    const japaneseEmploymentType =
+      employmentType === 'newGraduate' ? '新卒' : '中途'
+
+    router.push(
+      `interview?employmentType=${employmentType}&occupation=${occupation}`,
+    )
+    toast.info(
+      `入社形態「${japaneseEmploymentType}」、職業「 ${values.occupation}」で面接を始めます。`,
+    )
   }
 
   return (
@@ -68,7 +58,7 @@ export default function StartForm() {
               control={form.control}
               name="employmentType"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="ml-1">
                   <FormLabel className="font-semibold">入社形態</FormLabel>
                   <FormControl>
                     <RadioGroup
@@ -121,14 +111,12 @@ export default function StartForm() {
                 </FormItem>
               )}
             />
-            <FormError message={error} />
             <Button
-              className="bg-primary w-full py-2 rounded-md border border-secondary flex items-center justify-center gap-2 text-foreground disabled:opacity-50"
+              className="bg-primary w-full py-2 rounded-md border border-secondary group flex items-center justify-center gap-2 text-foreground disabled:opacity-50"
               type="submit"
-              disabled={isPending}
             >
-              {isPending && <TbLoader className="-ml-6 w-6 h-6 animate-spin" />}
               AI模擬面接を始める
+              <HiArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />{' '}
             </Button>
           </form>
         </Form>
