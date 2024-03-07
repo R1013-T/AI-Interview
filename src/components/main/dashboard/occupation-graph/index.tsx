@@ -2,7 +2,7 @@
 
 import { DonutChart } from '@tremor/react'
 
-const datahero = [
+const occupationData = [
   {
     occupation: 'Software Engineer',
     value: 7,
@@ -42,12 +42,14 @@ export default function OccupationGraph() {
     )
   }
 
+  if (!occupationData.length) return null
+
   return (
-    <div className="m-3 w-full">
+    <div className="m-3 mt-1 w-full">
       <h3 className="mb-2">職種</h3>
-      <div className="h-36 md:h-56 text-card-foreground flex justify-center items-center bg-card rounded-md border">
+      <div className="h-36 md:h-48 text-card-foreground flex justify-center items-center bg-card rounded-md border">
         <DonutChart
-          data={datahero}
+          data={occupationData}
           variant="donut"
           colors={[
             '#3ecf8e',
