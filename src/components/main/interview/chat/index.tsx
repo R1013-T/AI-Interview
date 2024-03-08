@@ -76,8 +76,8 @@ export default function InterviewChat() {
         <div key={m.id} className="whitespace-pre-wrap">
           {m.role === 'system' ? (
             <div className="text-white/10">{m.content}</div>
-            ) : (
-              <InterviewMessageItem {...m} />
+          ) : (
+            <InterviewMessageItem {...m} />
           )}
         </div>
       ))}
@@ -90,7 +90,8 @@ export default function InterviewChat() {
             onSubmit={form.handleSubmit(onHandleChatSubmit)}
             className="flex gap-1.5 w-full"
           >
-            <Link href="/interview/new"
+            <Link
+              href="/interview/new"
               className={`${buttonVariants({ variant: 'outline' })} h-11 py-1 px-1 aspect-square`}
             >
               <HiMiniPlusCircle className="w-8 h-8" />
