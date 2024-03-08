@@ -26,6 +26,7 @@ export default function StartForm() {
   const form = useForm<z.infer<typeof startFormSchema>>({
     resolver: zodResolver(startFormSchema),
     defaultValues: {
+      model: '35-turbo',
       employmentType: 'newGraduate',
       occupation: '',
     },
@@ -37,14 +38,8 @@ export default function StartForm() {
 
     const { employmentType, occupation } = validateFields.data
 
-    const japaneseEmploymentType =
-      employmentType === 'newGraduate' ? '新卒' : '中途'
-
     router.push(
       `interview?employmentType=${employmentType}&occupation=${occupation}`,
-    )
-    toast.info(
-      `入社形態「${japaneseEmploymentType}」、職業「 ${values.occupation}」で面接を始めます。`,
     )
   }
 
@@ -54,6 +49,40 @@ export default function StartForm() {
       <div className="w-full text-card-foreground p-5 px-3.5 bg-card rounded-md border">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
+            {/* <FormField
+              control={form.control}
+              name="model"
+              render={({ field }) => (
+                <FormItem className="ml-1">
+                  <FormLabel className="font-semibold">モデル</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="35-turbo" />
+                        </FormControl>
+                        <FormLabel className="text-base font-semibold">
+                          時間が掛かるが、精度が高い
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="4" />
+                        </FormControl>
+                        <FormLabel className="text-base font-semibold">
+                          速いが、精度が低い
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
             <FormField
               control={form.control}
               name="employmentType"
