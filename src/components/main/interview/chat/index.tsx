@@ -92,7 +92,7 @@ export default function InterviewChat() {
           >
             <Link
               href="/interview/new"
-              className={`${buttonVariants({ variant: 'outline' })} h-11 py-1 px-1 aspect-square`}
+              className="h-11 p-1 border aspect-square rounded-md hover:bg-white/10 hover:cursor-pointer"
             >
               <HiMiniPlusCircle className="w-8 h-8" />
             </Link>
