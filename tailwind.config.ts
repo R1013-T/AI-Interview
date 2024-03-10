@@ -110,11 +110,16 @@ const config = {
             'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
           },
         },
+        'show-up': {
+          from: { opacity: '0', transform: 'translateY(-0.75rem)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         bounce: 'bounce 0.7s linear infinite',
+        'show-up': 'show-up 0.3s ease-out forwards',
       },
       height: {
         'd-screen': '100dvh',

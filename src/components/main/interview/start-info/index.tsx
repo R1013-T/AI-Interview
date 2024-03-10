@@ -11,7 +11,7 @@ export default function StartInfo() {
   const employmentType = searchParams.get('employmentType')
 
   return (
-    <Alert>
+    <Alert className="animate-show-up">
       <AlertDescription className="flex gap-2 items-center">
         <HiOutlineInformationCircle className="w-6 h-6" />
         <p>{`入社形態「${employmentType === 'newGraduate' ? '新卒' : '中途'}」、職業「${occupation}」で面接を始めます。`}</p>
