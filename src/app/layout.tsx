@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'AIとチャット型式で模擬面接を出来ます。',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode

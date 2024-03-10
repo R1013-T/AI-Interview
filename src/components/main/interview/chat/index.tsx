@@ -4,34 +4,44 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useChat } from 'ai/react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import type { User } from 'next-auth'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { HiMiniArrowUpCircle, HiMiniPlusCircle } from 'react-icons/hi2'
 import { TbLoader } from 'react-icons/tb'
 import type * as z from 'zod'
 
-import { Button } from '@/components/ui/button'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
+  getInterviewByIdAction,
+  updateInterviewMessageAction,
+} from '@/actions/interview'
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { interviewInputSchema } from '@/lib/schemas/interview'
+import type { Interview } from '@/types/interview'
 
 import LoadBounce from '../load-bounce'
 import StartInfo from '../start-info'
 import InterviewMessageItem from './messageItem'
+import FinishButton from './messageItem/finish-button'
 
 export default function InterviewChat() {
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
-
+  const scrollRef = useRef<HTMLDivElement>(null)
   const searchParams = useSearchParams()
-  const occupation = searchParams.get('occupation')
-  const employmentType = searchParams.get('employmentType')
+  const id = searchParams.get('id')
+
+  const [user, setUser] = useState<User>()
+  const [interviewData, setInterviewData] = useState<Interview>()
 
   const {
     messages,
@@ -56,72 +66,107 @@ export default function InterviewChat() {
   ) => {
     setInput(values.message)
     handleSubmit(event)
-    console.log('values', values)
   }
 
   useEffect(() => {
-    console.log('messages', messages)
     form.reset()
+    scrollRef?.current?.scrollIntoView()
+
+    startTransition(async () => {
+      const result = await updateInterviewMessageAction({
+        id: interviewData?.id!,
+        messages,
+      })
+
+      //TODO: error handling
+    })
   }, [messages])
 
   useEffect(() => {
-    if (!occupation || !employmentType) router.push('/interview/new')
+    setMessages(JSON.parse(interviewData?.questionsAndAnswers || '[]'))
+  }, [interviewData])
 
-    setMessages([
-      {
-        id: '1',
-        role: 'system',
-        content: `これからに${employmentType === 'newGraduate' ? '新卒' : '中途'}採用おける、面接を行ってください。`,
-      },
-      { id: '2', role: 'system', content: `職種は、${occupation}です。` },
-      {
-        id: '3',
-        role: 'system',
-        content: 'まず、最初の挨拶と、最初の質問をしてください。',
-      },
-      {
-        id: '4',
-        role: 'system',
-        content: 'HTMLタグは使用せず、改行コードのみを使用してください。',
-      },
-      {
-        id: '5',
-        role: 'assistant',
-        content: `こんにちは。\n${occupation}の${employmentType === 'newGraduate' ? '新卒' : '中途'}採用面接を行います。よろしくお願いします。\n最初に、自己紹介をお願いします。`,
-      },
-    ])
+  useEffect(() => {
+    if (!id) {
+      router.push('/interview/new')
+      return
+    }
+
+    startTransition(async () => {
+      const interviewData = await getInterviewByIdAction(id)
+      if (!interviewData.isSuccess) {
+        router.push('/interview/new')
+        return
+      }
+
+      if (!interviewData.data) {
+        router.push('/interview/new')
+        return
+      }
+      const { interview, user } = interviewData.data
+
+      setInterviewData(interview as Interview)
+      setUser(user as User)
+    })
   }, [])
 
   return (
     <div className="pt-14 md:pt-3 pb-24 flex flex-col w-full mx-auto">
-      <StartInfo />
+      <StartInfo interview={interviewData as Interview} />
 
-      <div className="opacity-0 animate-show-up delay-200">
-        {messages.map((m) => (
-          <div key={m.id} className="whitespace-pre-wrap">
-            {m.role === 'system' ? (
-              <div className="text-white/10">{m.content}</div>
-            ) : (
-              <InterviewMessageItem {...m} />
+      <div className="mt-3 px-1">
+        {messages.map((m, index) => (
+          <div key={m.id} className="whitespace-pre-wrap flex flex-col gap-3">
+            {m.role === 'system' ? null : (
+              <InterviewMessageItem
+                message={m}
+                user={user as User}
+                isLoading={isLoading}
+                isLast={messages.length === index + 1}
+              />
             )}
           </div>
         ))}
       </div>
 
-      {isLoading && <LoadBounce />}
+      {isLoading && (
+        <div className="ml-10">
+          <LoadBounce />
+        </div>
+      )}
 
-      <div className="absolute bottom-6 left-3 right-3">
+      {messages.length >= 6 && (
+        <div
+          ref={scrollRef}
+          className="mx-auto mt-3 opacity-0 animate-show-up delay-200"
+        >
+          <FinishButton disabled={isLoading || messages.length <= 5} />
+        </div>
+      )}
+
+      <div className="absolute bottom-4 left-3 right-3">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onHandleChatSubmit)}
             className="flex items-end gap-1.5 w-full"
           >
-            <Link
-              href="/interview/new"
-              className="h-11 p-1 border aspect-square rounded-md hover:bg-white/10 hover:cursor-pointer"
-            >
-              <HiMiniPlusCircle className="w-8 h-8" />
-            </Link>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href="/interview/new"
+                    className="h-11 p-1 border aspect-square block rounded-md bg-black hover:bg-white/10 hover:cursor-pointer"
+                  >
+                    <HiMiniPlusCircle className="w-8 h-8" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="text-sm text-muted-foreground">
+                    <p>新しい面接</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             {isLoading ? (
               <Input
                 className="border h-[2.8rem] w-full rounded-md"
@@ -134,7 +179,7 @@ export default function InterviewChat() {
                 name="message"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormControl>
+                    <FormControl onChange={handleInputChange}>
                       <Textarea
                         className="border pt-2.5 h-auto overflow-hidden w-full placeholder:text-foreground/10 bg-card focus-visible:ring-0 focus-visible:ring-offset-0 text-base resize-none"
                         rows={1}
@@ -145,15 +190,17 @@ export default function InterviewChat() {
                         }}
                         placeholder="メッセージを入力してください"
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') e.preventDefault()
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                          }
                           if (e.key === 'Enter' && e.metaKey) {
-                            console.log('metaKey')
                             form.handleSubmit(onHandleChatSubmit)(e)
                           }
                           if (e.key === 'Enter' && e.shiftKey) {
                             form.setValue('message', `${field.value}\n`)
                           }
                         }}
+                        disabled={isLoading || isPending}
                         autoFocus
                         {...field}
                       />
@@ -162,17 +209,31 @@ export default function InterviewChat() {
                 )}
               />
             )}
-            <Button
-              type="submit"
-              className="border h-11 aspect-square p-0 rounded-md"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <TbLoader className="w-6 h-6 animate-spin" />
-              ) : (
-                <HiMiniArrowUpCircle className="w-8 h-8" />
-              )}
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    type="submit"
+                    className="border h-11 aspect-square p-0 rounded-md"
+                    disabled={isLoading || isPending}
+                  >
+                    {isLoading ? (
+                      <TbLoader className="w-6 h-6 animate-spin" />
+                    ) : (
+                      <HiMiniArrowUpCircle className="w-8 h-8" />
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="text-sm text-muted-foreground flex gap-1">
+                    <p>送信</p>
+                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-muted-foreground opacity-100">
+                      ⌘ <span className="text-xs">Enter</span>
+                    </kbd>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </form>
         </Form>
       </div>

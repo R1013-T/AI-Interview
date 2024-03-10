@@ -8,7 +8,7 @@ import { createUser, getUserByEmail } from '@/db/methods/user'
 import { emailSchema, signInSchema, signUpSchema } from '@/lib/schemas/auth'
 import type { ActionsResult, ConfirmEmailActionResult } from '@/types/action'
 
-import { signIn, signOut } from '../../auth'
+import { auth, signIn, signOut } from '../../auth'
 import { DEFAULT_LOGIN_REDIRECT } from '../../routes'
 
 export const confirmEmail = async (

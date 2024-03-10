@@ -2,11 +2,13 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { HiArrowRight } from 'react-icons/hi2'
-import { toast } from 'sonner'
+import { v4 as uuidv4 } from 'uuid'
 import type * as z from 'zod'
 
+import { createInterviewAction } from '@/actions/interview'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -21,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { startFormSchema } from '@/lib/schemas/interview'
 
 export default function StartForm() {
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   const form = useForm<z.infer<typeof startFormSchema>>({
@@ -33,14 +36,29 @@ export default function StartForm() {
   })
 
   const onSubmit = (values: z.infer<typeof startFormSchema>) => {
-    const validateFields = startFormSchema.safeParse(values)
-    if (!validateFields.success) return
+    startTransition(async () => {
+      const validateFields = startFormSchema.safeParse(values)
+      if (!validateFields.success) return
 
-    const { employmentType, occupation } = validateFields.data
+      const { employmentType, occupation } = validateFields.data
+      const id = uuidv4()
 
-    router.push(
-      `interview?employmentType=${employmentType}&occupation=${occupation}`,
-    )
+      const result = await createInterviewAction({
+        id: id!,
+        occupation: occupation!,
+        employmentType: employmentType! as 'newGraduate' | 'midCareer',
+        questionsAndAnswers: JSON.stringify(onmessage),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: '',
+      })
+
+      if (!result.isSuccess) {
+        return
+      }
+
+      router.push(`interview?id=${id}`)
+    })
   }
 
   return (
@@ -143,9 +161,10 @@ export default function StartForm() {
             <Button
               className="bg-primary w-full py-2 rounded-md border border-secondary group flex items-center justify-center gap-2 text-foreground disabled:opacity-50"
               type="submit"
+              disabled={isPending}
             >
               AI模擬面接を始める
-              <HiArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />{' '}
+              <HiArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </form>
         </Form>

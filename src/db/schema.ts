@@ -73,8 +73,8 @@ export const interviews = pgTable('interview', {
   occupation: text('occupation').notNull(),
   employmentType: employmentTypeEnums('employmentType').notNull(),
   questionsAndAnswers: text('questionsAndAnswers').notNull(),
-  score: integer('score').notNull(),
-  feedBack: text('feedBack').notNull(),
+  score: integer('score'),
+  feedBack: text('feedBack'),
   createdAt: timestamp('createdAt', { mode: 'date' }).notNull(),
   updatedAt: timestamp('updatedAt', { mode: 'date' }),
   userId: text('userId')

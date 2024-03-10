@@ -119,7 +119,7 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         bounce: 'bounce 0.7s linear infinite',
-        'show-up': 'show-up 0.3s ease-out forwards',
+        'show-up': 'show-up 0.2s ease-out forwards',
       },
       height: {
         'd-screen': '100dvh',
