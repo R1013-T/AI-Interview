@@ -24,6 +24,15 @@ export const getInterviewByIdAction = async (id: string) => {
     const interview = await getInterviewById(id)
     const user = await getUserByEmail(session?.user?.email as string)
 
+    if (session?.user?.id != user?.id) {
+      return {
+        isSuccess: false,
+        error: {
+          message: 'Invalid user id',
+        },
+      }
+    }
+
     return {
       isSuccess: true,
       data: {

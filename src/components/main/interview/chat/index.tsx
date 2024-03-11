@@ -79,6 +79,7 @@ export default function InterviewChat() {
       })
 
       //TODO: error handling
+      console.log('result: ', result)
     })
   }, [messages])
 
@@ -93,6 +94,7 @@ export default function InterviewChat() {
     }
 
     startTransition(async () => {
+      console.log('id: ', id)
       const interviewData = await getInterviewByIdAction(id)
       if (!interviewData.isSuccess) {
         router.push('/interview/new')
@@ -140,7 +142,10 @@ export default function InterviewChat() {
           ref={scrollRef}
           className="mx-auto mt-3 opacity-0 animate-show-up delay-200"
         >
-          <FinishButton disabled={isLoading || messages.length <= 5} />
+          <FinishButton
+            messages={messages}
+            disabled={isLoading || messages.length <= 5}
+          />
         </div>
       )}
 
@@ -200,7 +205,7 @@ export default function InterviewChat() {
                             form.setValue('message', `${field.value}\n`)
                           }
                         }}
-                        disabled={isLoading || isPending}
+                        // disabled={messages.length <= 5 && isPending}
                         autoFocus
                         {...field}
                       />
@@ -215,7 +220,7 @@ export default function InterviewChat() {
                   <Button
                     type="submit"
                     className="border h-11 aspect-square p-0 rounded-md"
-                    disabled={isLoading || isPending}
+                    disabled={isLoading}
                   >
                     {isLoading ? (
                       <TbLoader className="w-6 h-6 animate-spin" />
