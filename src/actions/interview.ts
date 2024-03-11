@@ -24,7 +24,7 @@ export const getInterviewByIdAction = async (id: string) => {
     const interview = await getInterviewById(id)
     const user = await getUserByEmail(session?.user?.email as string)
 
-    if (session?.user?.id != user?.id) {
+    if (session?.user?.id != interview?.userId) {
       return {
         isSuccess: false,
         error: {
