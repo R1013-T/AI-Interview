@@ -66,21 +66,18 @@ export default function InterviewChat() {
   ) => {
     setInput(values.message)
     handleSubmit(event)
-  }
-
-  useEffect(() => {
-    form.reset()
-    scrollRef?.current?.scrollIntoView()
 
     startTransition(async () => {
       const result = await updateInterviewMessageAction({
         id: interviewData?.id!,
         messages,
       })
-
-      //TODO: error handling
-      console.log('result: ', result)
     })
+  }
+
+  useEffect(() => {
+    form.reset()
+    scrollRef?.current?.scrollIntoView()
   }, [messages])
 
   useEffect(() => {
@@ -94,7 +91,6 @@ export default function InterviewChat() {
     }
 
     startTransition(async () => {
-      console.log('id: ', id)
       const interviewData = await getInterviewByIdAction(id)
       if (!interviewData.isSuccess) {
         router.push('/interview/new')
