@@ -1,5 +1,6 @@
 import { AzureKeyCredential, OpenAIClient } from '@azure/openai'
 
+export const maxDuration = 60 * 30000 // 30 seconds
 export async function POST(request: Request) {
   const { messages } = await request.json()
 
