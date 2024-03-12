@@ -50,7 +50,7 @@ export default function ScoreGraph() {
     })
   }, [])
 
-  if (!chartData) return null
+  if (!chartData?.length) return null
 
   return (
     <div className="m-3 w-full pr-6">
