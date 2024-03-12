@@ -19,6 +19,19 @@ export const getInterviewById = async (id: string) => {
   }
 }
 
+export const getInterviewByUserId = async (userId: string) => {
+  try {
+    const result = await db
+      .select()
+      .from(interviews)
+      .where(eq(interviews.userId, userId))
+    return result
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
+
 export const createInterview = async (interview: Interview) => {
   try {
     await db.insert(interviews).values({

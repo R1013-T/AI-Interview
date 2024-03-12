@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   const { messages } = await request.json()
 
   const response = await client.streamChatCompletions(
-    process.env.AZURE_OPENAI_DEPLOYMENT_NAME_35!,
+    process.env.AZURE_OPENAI_DEPLOYMENT_NAME_35_1106!,
     messages,
   )
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { HiArrowRight } from 'react-icons/hi2'
+import { TbLoader } from 'react-icons/tb'
 import { v4 as uuidv4 } from 'uuid'
 import type * as z from 'zod'
 
@@ -163,6 +164,7 @@ export default function StartForm() {
               type="submit"
               disabled={isPending}
             >
+              {isPending && <TbLoader className="w-5 h-5 animate-spin" />}
               AI模擬面接を始める
               <HiArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>

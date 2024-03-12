@@ -1,47 +1,16 @@
 'use client'
 
 import { AreaChart } from '@tremor/react'
+import { useEffect, useState, useTransition } from 'react'
 
-const scoreData = [
-  {
-    date: '2023/01/01',
-    score: 70,
-  },
-  {
-    date: '2023/01/02',
-    score: 60,
-  },
-  {
-    date: '2023/01/03',
-    score: 65,
-  },
-  {
-    date: '2023/01/04',
-    score: 70,
-  },
-  {
-    date: '2023/01/05',
-    score: 80,
-  },
-  {
-    date: '2023/01/06',
-    score: 90,
-  },
-  {
-    date: '2023/01/07',
-    score: 85,
-  },
-  {
-    date: '2023/01/08',
-    score: 80,
-  },
-  {
-    date: '2023/01/09',
-    score: 90,
-  },
-]
+import { getInterviewByUserIdAction } from '@/actions/interview'
 
 export default function ScoreGraph() {
+  const [isPending, startTransition] = useTransition()
+
+  const [chartData, setChartData] =
+    useState<{ score: number; date: string }[]>()
+
   const customTooltip = (props: any) => {
     const { payload, active } = props
     if (!active || !payload) return null
@@ -54,7 +23,34 @@ export default function ScoreGraph() {
     )
   }
 
-  if (!scoreData.length) return null
+  const formatData = (data: Date): string => {
+    const dateString = data.toString()
+    const splitDate = dateString.split(' ')
+    const formattedDate = `${splitDate[1]} ${splitDate[2]} ${splitDate[4]}`
+    return formattedDate
+  }
+
+  useEffect(() => {
+    startTransition(async () => {
+      const response = await getInterviewByUserIdAction()
+      if (!response.isSuccess) {
+        return
+      }
+
+      const data = response.data
+      if (!data) return
+
+      const scores = data.map((item) => {
+        return {
+          score: item.score || 0,
+          date: formatData(item.createdAt),
+        }
+      })
+      setChartData(scores)
+    })
+  }, [])
+
+  if (!chartData) return null
 
   return (
     <div className="m-3 w-full pr-6">
@@ -67,7 +63,7 @@ export default function ScoreGraph() {
         </div>
         <AreaChart
           className="h-full"
-          data={scoreData}
+          data={chartData as any[]}
           index="date"
           categories={['score']}
           colors={['#3ecf8e']}

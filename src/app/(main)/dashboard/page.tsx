@@ -3,8 +3,6 @@ import ScoreGraph from '@/components/main/dashboard/score-graph'
 import StartForm from '@/components/main/interview/start-form'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
-import { auth } from '../../../../auth'
-
 export default async function DashboardPage() {
   return (
     <article className="h-full w-full flex flex-col gap-3">
@@ -16,10 +14,10 @@ export default async function DashboardPage() {
             </h2>
             <div className="w-full flex flex-col">
               <ScoreGraph />
-              <div className="w-full pr-6 flex">
+              {/* <div className="w-full pr-6 flex">
                 <OccupationGraph />
                 <div className="w-full"></div>
-              </div>
+              </div> */}
             </div>
           </div>
           <StartForm />

@@ -6,6 +6,7 @@ import type * as z from 'zod'
 import {
   createInterview,
   getInterviewById,
+  getInterviewByUserId,
   updateInterviewMessage,
   updateInterviewResult,
 } from '@/db/methods/interview'
@@ -40,6 +41,26 @@ export const getInterviewByIdAction = async (id: string) => {
         interview,
         user,
       },
+    }
+  } catch (error) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'Failed to get interview',
+      },
+    }
+  }
+}
+
+export const getInterviewByUserIdAction = async () => {
+  const session = await auth()
+
+  try {
+    const interviews = await getInterviewByUserId(session?.user?.id as string)
+
+    return {
+      isSuccess: true,
+      data: interviews,
     }
   } catch (error) {
     return {
