@@ -11,6 +11,8 @@ const config = {
   ],
   prefix: '',
   theme: {
+    transparent: 'transparent',
+    current: 'currentColor',
     container: {
       center: true,
       padding: '2rem',
@@ -55,12 +57,12 @@ const config = {
         },
         tremor: {
           brand: {
-            faint: colors.white,
-            muted: colors.white,
-            subtle: colors.white,
-            DEFAULT: colors.white,
-            emphasis: colors.white,
-            inverted: colors.white,
+            faint: 'var(--primary))',
+            muted: 'var(--primary))',
+            subtle: 'var(--primary))',
+            DEFAULT: 'var(--primary))',
+            emphasis: 'var(--primary))',
+            inverted: '#FFFFFF',
           },
           background: {
             muted: colors.gray[50],
@@ -72,7 +74,7 @@ const config = {
             DEFAULT: colors.white,
           },
           ring: {
-            DEFAULT: colors.white,
+            DEFAULT: 'var(--primary))',
           },
           content: {
             subtle: colors.gray[400],

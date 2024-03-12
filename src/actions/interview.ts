@@ -7,6 +7,7 @@ import {
   createInterview,
   getInterviewById,
   updateInterviewMessage,
+  updateInterviewResult,
 } from '@/db/methods/interview'
 import { getUserByEmail } from '@/db/methods/user'
 import {
@@ -103,6 +104,33 @@ export const updateInterviewMessageAction = async (values: {
     await updateInterviewMessage({
       id: values.id,
       messages: values.messages,
+    })
+
+    return {
+      isSuccess: true,
+    }
+  } catch (error) {
+    return {
+      isSuccess: false,
+      error: {
+        message: 'Failed to update interview message',
+      },
+    }
+  }
+}
+
+export const updateInterviewResultAction = async (values: {
+  id: string
+  messages: Message[]
+  score: number
+  advice: string
+}): Promise<ActionsResult> => {
+  try {
+    await updateInterviewResult({
+      id: values.id,
+      messages: values.messages,
+      score: values.score,
+      advice: values.advice,
     })
 
     return {

@@ -77,3 +77,30 @@ export const updateInterviewMessage = async ({
     return null
   }
 }
+
+export const updateInterviewResult = async ({
+  id,
+  messages,
+  score,
+  advice,
+}: {
+  id: string
+  messages: Message[]
+  score: number
+  advice: string
+}) => {
+  try {
+    await db
+      .update(interviews)
+      .set({
+        questionsAndAnswers: JSON.stringify(messages),
+        score,
+        feedBack: advice,
+      })
+      .where(eq(interviews.id, id))
+    return true
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}

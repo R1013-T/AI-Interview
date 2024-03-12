@@ -9,11 +9,13 @@ import { useEffect, useRef, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { HiMiniArrowUpCircle, HiMiniPlusCircle } from 'react-icons/hi2'
 import { TbLoader } from 'react-icons/tb'
+import { toast } from 'sonner'
 import type * as z from 'zod'
 
 import {
   getInterviewByIdAction,
   updateInterviewMessageAction,
+  updateInterviewResultAction,
 } from '@/actions/interview'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
@@ -26,12 +28,13 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { interviewInputSchema } from '@/lib/schemas/interview'
-import type { Interview } from '@/types/interview'
+import type { Interview, InterviewResult } from '@/types/interview'
 
 import LoadBounce from '../load-bounce'
 import StartInfo from '../start-info'
+import FinishButton from './finish-button'
 import InterviewMessageItem from './messageItem'
-import FinishButton from './messageItem/finish-button'
+import ResultCard from './resultCard'
 
 export default function InterviewChat() {
   const [isPending, startTransition] = useTransition()
@@ -42,6 +45,8 @@ export default function InterviewChat() {
 
   const [user, setUser] = useState<User>()
   const [interviewData, setInterviewData] = useState<Interview>()
+  const [isResultLoading, setIsResultLoading] = useState(false)
+  const [interviewResult, setInterviewResult] = useState<InterviewResult>()
 
   const {
     messages,
@@ -68,7 +73,7 @@ export default function InterviewChat() {
     handleSubmit(event)
 
     startTransition(async () => {
-      const result = await updateInterviewMessageAction({
+      await updateInterviewMessageAction({
         id: interviewData?.id!,
         messages,
       })
@@ -82,7 +87,46 @@ export default function InterviewChat() {
 
   useEffect(() => {
     setMessages(JSON.parse(interviewData?.questionsAndAnswers || '[]'))
+    setInterviewResult({
+      score: interviewData?.score || 0,
+      advice: interviewData?.feedBack || '',
+    })
   }, [interviewData])
+
+  useEffect(() => {
+    if (!interviewResult?.advice) return
+
+    startTransition(async () => {
+      if (!id) {
+        router.push('/interview/new')
+        return
+      }
+
+      const updateRes = await updateInterviewResultAction({
+        id,
+        messages,
+        score: interviewResult.score,
+        advice: interviewResult.advice,
+      })
+      if (!updateRes.isSuccess) {
+        router.push('/interview/new')
+        return
+      }
+
+      const interviewData = await getInterviewByIdAction(id)
+      if (!interviewData.isSuccess) {
+        router.push('/interview/new')
+        return
+      }
+
+      if (!interviewData.data) {
+        router.push('/interview/new')
+        return
+      }
+      const { interview } = interviewData.data
+      setInterviewData(interview as Interview)
+    })
+  }, [interviewResult])
 
   useEffect(() => {
     if (!id) {
@@ -102,7 +146,6 @@ export default function InterviewChat() {
         return
       }
       const { interview, user } = interviewData.data
-
       setInterviewData(interview as Interview)
       setUser(user as User)
     })
@@ -138,10 +181,32 @@ export default function InterviewChat() {
           ref={scrollRef}
           className="mx-auto mt-3 opacity-0 animate-show-up delay-200"
         >
-          <FinishButton
-            messages={messages}
-            disabled={isLoading || messages.length <= 5}
+          {!interviewResult?.advice && (
+            <FinishButton
+              messages={messages}
+              disabled={isLoading || messages.length <= 5 || isResultLoading}
+              setInterviewResult={setInterviewResult}
+              setIsResultLoading={setIsResultLoading}
+            />
+          )}
+        </div>
+      )}
+
+      {interviewResult?.advice && (
+        <div className="w-full flex flex-col items-center animate-show-up">
+          <ResultCard
+            score={interviewResult.score}
+            advice={interviewResult.advice}
           />
+          <Button
+            onClick={() => {
+              toast(
+                '面接を再開する機能はまだ実装されていません。アップデートをお待ち下さい。',
+              )
+            }}
+          >
+            面接を再開する
+          </Button>
         </div>
       )}
 
@@ -201,7 +266,13 @@ export default function InterviewChat() {
                             form.setValue('message', `${field.value}\n`)
                           }
                         }}
-                        // disabled={messages.length <= 5 && isPending}
+                        disabled={
+                          !!(
+                            isLoading ||
+                            isResultLoading ||
+                            interviewResult?.advice
+                          )
+                        }
                         autoFocus
                         {...field}
                       />
@@ -216,7 +287,13 @@ export default function InterviewChat() {
                   <Button
                     type="submit"
                     className="border h-11 aspect-square p-0 rounded-md"
-                    disabled={isLoading}
+                    disabled={
+                      !!(
+                        isLoading ||
+                        isResultLoading ||
+                        interviewResult?.advice
+                      )
+                    }
                   >
                     {isLoading ? (
                       <TbLoader className="w-6 h-6 animate-spin" />

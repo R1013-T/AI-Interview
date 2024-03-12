@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     new AzureKeyCredential(process.env.AZURE_OPENAI_API_KEY!),
   )
   const result = await client.getChatCompletions(
-    process.env.AZURE_OPENAI_DEPLOYMENT_NAME_35_1106!,
+    process.env.AZURE_OPENAI_DEPLOYMENT_NAME_4!,
     messages,
     { responseFormat: { type: 'json_object' } },
   )

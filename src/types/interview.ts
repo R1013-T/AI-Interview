@@ -9,3 +9,8 @@ export type Interview = {
   updatedAt: Date
   userId: string
 }
+
+export type InterviewResult = {
+  score: number
+  advice: string
+}
