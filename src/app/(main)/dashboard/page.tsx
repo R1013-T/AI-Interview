@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 export default async function DashboardPage() {
   return (
     <article className="h-full w-full flex flex-col gap-3">
-      <ScrollArea className="h-ful">
+      <ScrollArea className="h-full">
         <div className="pt-12 md:pt-3 pb-6 min-h-dvh w-full max-w-2xl mx-auto flex flex-col justify-between gap-2">
           <div>
             <h2 className="w-full text-center p-3 text-xl md:text-left text-card-foreground">
