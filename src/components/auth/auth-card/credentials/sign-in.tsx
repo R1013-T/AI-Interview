@@ -104,7 +104,7 @@ export default function SignIn() {
         href={`/auth/password-reset?email=${email}`}
         className="mt-5 text-center block cursor-pointer underline-offset-4 hover:underline"
       >
-        <p className="text-xs text-white/40">パスワードを変更する</p>
+        {/* <p className="text-xs text-white/40">パスワードを変更する</p> */}
       </Link>
     </>
   )
