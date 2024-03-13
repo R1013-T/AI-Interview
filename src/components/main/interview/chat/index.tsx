@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useChat } from 'ai/react'
+import { Message, useChat } from 'ai/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { User } from 'next-auth'
@@ -93,12 +93,14 @@ export default function InterviewChat({ id }: { id: string }) {
 
   useEffect(() => {
     if (!interviewResult?.advice) return
+    if (isPending) return
 
     startTransition(async () => {
       if (!id) {
         router.push('/interview/new')
         return
       }
+      messages.pop()
 
       const updateRes = await updateInterviewResultAction({
         id,
@@ -175,11 +177,11 @@ export default function InterviewChat({ id }: { id: string }) {
       )}
 
       {messages.length >= 6 && (
-        <div className="w-full">
+        <div className="mx-auto">
           {!interviewResult?.advice && (
             <div
               ref={scrollRef}
-              className="mx-auto mt-3 opacity-0 animate-show-up delay-200"
+              className="mt-3 opacity-0 animate-show-up delay-200"
             >
               <FinishButton
                 messages={messages}

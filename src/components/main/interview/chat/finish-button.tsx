@@ -28,6 +28,8 @@ export default function FinishButton({
           ({ id, createdAt, ...rest }) => rest,
         )
 
+        requestMessages.pop()
+
         requestMessages.push({
           role: 'system',
           content: `
