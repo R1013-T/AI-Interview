@@ -20,6 +20,7 @@ import type { ActionsResult } from '@/types/action'
 import { auth } from '../../auth'
 
 export const getInterviewByIdAction = async (id: string) => {
+  console.log('getInterviewByIdAction')
   const session = await auth()
 
   try {
@@ -53,6 +54,7 @@ export const getInterviewByIdAction = async (id: string) => {
 }
 
 export const getInterviewByUserIdAction = async () => {
+  console.log('getInterviewByUserIdAction')
   const session = await auth()
 
   try {
@@ -75,6 +77,7 @@ export const getInterviewByUserIdAction = async () => {
 export const createInterviewAction = async (
   values: z.infer<typeof createInterviewSchema>,
 ): Promise<ActionsResult> => {
+  console.log('createInterviewAction')
   const validateFields = createInterviewSchema.safeParse(values)
 
   const session = await auth()
@@ -121,6 +124,7 @@ export const updateInterviewMessageAction = async (values: {
   id: string
   messages: Message[]
 }): Promise<ActionsResult> => {
+  console.log('updateInterviewMessageAction')
   try {
     await updateInterviewMessage({
       id: values.id,
@@ -146,6 +150,7 @@ export const updateInterviewResultAction = async (values: {
   score: number
   advice: string
 }): Promise<ActionsResult> => {
+  console.log('updateInterviewResultAction')
   try {
     await updateInterviewResult({
       id: values.id,

@@ -58,7 +58,7 @@ export default function StartForm() {
         return
       }
 
-      router.push(`interview?id=${id}`)
+      router.push(`/interview/${id}`)
     })
   }
 

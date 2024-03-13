@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useChat } from 'ai/react'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import type { User } from 'next-auth'
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
@@ -36,12 +36,10 @@ import FinishButton from './finish-button'
 import InterviewMessageItem from './messageItem'
 import ResultCard from './resultCard'
 
-export default function InterviewChat() {
+export default function InterviewChat({ id }: { id: string }) {
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const scrollRef = useRef<HTMLDivElement>(null)
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
 
   const [user, setUser] = useState<User>()
   const [interviewData, setInterviewData] = useState<Interview>()

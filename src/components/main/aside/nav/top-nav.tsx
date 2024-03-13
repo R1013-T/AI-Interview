@@ -13,7 +13,9 @@ type NavItem = {
 export default async function TopNav() {
   const session = await auth()
   const interviews = await getInterviewByUserId(session?.user?.id as string)
-  let navItems: NavItem[] = interviews!.map((interview) => ({
+
+  if (!interviews) return null
+  let navItems: NavItem[] = interviews.map((interview) => ({
     id: interview.id,
     occupation: interview.occupation,
     score: interview.score || '-',
@@ -31,7 +33,7 @@ export default async function TopNav() {
   }) => {
     return (
       <Link
-        href={`/interview?id=${id}`}
+        href={`/interview/${id}`}
         className="flex justify-between items-center gap-2 hover:bg-white/25 py-2 px-2.5 mr-3 rounded-md"
       >
         <p className="text-sm">{occupation}</p>
