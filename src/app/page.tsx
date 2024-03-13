@@ -14,7 +14,7 @@ export default function Home() {
           <h1 className="relative z-10 text-4xl md:text-7xl  bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60  text-center font-sans font-bold tracking-wide">
             AI模擬面接
           </h1>
-          <h2>AIがチャット形式で面接を行い、面接の結果を分析します。</h2>
+          <h2>AIがチャット形式で面接を行い、<br />面接の結果を分析します。</h2>
           <AuthLink />
           <Image src="/mock.png" alt="hero" width={1034} height={658} />
           <AuthLink />
