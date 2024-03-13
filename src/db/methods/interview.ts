@@ -1,5 +1,5 @@
 import type { Message } from 'ai/react'
-import { eq } from 'drizzle-orm'
+import { asc, eq } from 'drizzle-orm'
 
 import { db } from '@/lib/database'
 import type { Interview } from '@/types/interview'
@@ -25,6 +25,7 @@ export const getInterviewByUserId = async (userId: string) => {
       .select()
       .from(interviews)
       .where(eq(interviews.userId, userId))
+      .orderBy(asc(interviews.createdAt))
     return result
   } catch (error) {
     console.error(error)
