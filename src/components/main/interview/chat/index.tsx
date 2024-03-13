@@ -175,17 +175,19 @@ export default function InterviewChat({ id }: { id: string }) {
       )}
 
       {messages.length >= 6 && (
-        <div
-          ref={scrollRef}
-          className="mx-auto mt-3 opacity-0 animate-show-up delay-200"
-        >
+        <div className="">
           {!interviewResult?.advice && (
-            <FinishButton
-              messages={messages}
-              disabled={isLoading || messages.length <= 5 || isResultLoading}
-              setInterviewResult={setInterviewResult}
-              setIsResultLoading={setIsResultLoading}
-            />
+            <div
+              ref={scrollRef}
+              className="mx-auto mt-3 opacity-0 animate-show-up delay-200"
+            >
+              <FinishButton
+                messages={messages}
+                disabled={isLoading || messages.length <= 5 || isResultLoading}
+                setInterviewResult={setInterviewResult}
+                setIsResultLoading={setIsResultLoading}
+              />
+            </div>
           )}
         </div>
       )}
