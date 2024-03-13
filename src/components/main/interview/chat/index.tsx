@@ -175,7 +175,7 @@ export default function InterviewChat({ id }: { id: string }) {
       )}
 
       {messages.length >= 6 && (
-        <div className="">
+        <div className="w-full">
           {!interviewResult?.advice && (
             <div
               ref={scrollRef}
